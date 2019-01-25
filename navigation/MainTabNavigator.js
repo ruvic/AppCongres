@@ -1,60 +1,144 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import ScheduleScreen from "../screens/ScheduleScreen";
+import FavoriteScheduleScreen from "../screens/FavoriteScheduleScreen";
+import SpeakersScreen from "../screens/SpeakersScreen";
+import GalleryScreen from "../screens/GalleryScreen";
+import AboutScreen from "../screens/AboutScreen";
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+import Colors from "../constants/Colors";
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import Layout from "../constants/Layout";
+
+
+// const createTab = (screen, icon) => ({
+//     screen: screen,
+//     navigationOptions: {
+//         tabBarIcon: ({focused}) => (
+//             <Ionicon
+//                 name={icon}
+//                 color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
+//                 size={Layout.icon_size}
+//             />
+//         )
+//     }
+// });
+//
+// export default MainTabNavigator = createMaterialTopTabNavigator(
+//     {
+//         Schedule: createTab(ScheduleScreen, "md-calendar"),
+//         FavoriteSchedule: createTab(FavoriteScheduleScreen, "md-star"),
+//         Speakers: createTab(SpeakersScreen, "md-contacts"),
+//         Gallery: createTab(GalleryScreen, "md-images"),
+//         About: createTab(AboutScreen, "md-information-circle")
+//     },
+//     {
+//         tabBarPosition: 'bottom',
+//         tabBarOptions : {
+//             labelStyle: {
+//                 fontSize: 8,
+//             },
+//             showLabel : true,
+//             showIcon : true,
+//             style: {
+//                 backgroundColor: Colors.tabBar
+//             },
+//             indicatorStyle: {
+//                 backgroundColor: Colors.primaryColor,
+//                 opacity: .8
+//             }
+//         },
+//     }
+// )
+
+const ScheduleStack = createStackNavigator({
+    Home: ScheduleScreen,
 });
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
+ScheduleStack.navigationOptions = {
+    tabBarLabel: 'Schedule',
+    tabBarIcon: ({ focused }) => (
+        <Ionicon
+            name={"md-calendar"}
+            color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
+            size={Layout.icon_size}
+        />
+    ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const FavoriteStack = createStackNavigator({
+    Home: FavoriteScheduleScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
-    />
-  ),
+FavoriteStack.navigationOptions = {
+    tabBarLabel: 'My Schedule',
+    tabBarIcon: ({ focused }) => (
+        <Ionicon
+            name={"md-star"}
+            color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
+            size={Layout.icon_size}
+        />
+    ),
+
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const SpeakerStack = createStackNavigator({
+    Home: SpeakersScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
-    />
-  ),
+SpeakerStack.navigationOptions = {
+    tabBarLabel: 'Speaker',
+    tabBarIcon: ({ focused }) => (
+        <Ionicon
+            name={"md-contacts"}
+            color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
+            size={Layout.icon_size}
+        />
+    ),
 };
+
+const GalleryStack = createStackNavigator({
+    Home: GalleryScreen,
+});
+
+GalleryStack.navigationOptions = {
+    tabBarLabel: 'Gallery',
+    tabBarIcon: ({ focused }) => (
+        <Ionicon
+            name={"md-images"}
+            color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
+            size={Layout.icon_size}
+        />
+    ),
+};
+
+const AboutStack = createStackNavigator({
+    Home: AboutScreen,
+});
+
+AboutStack.navigationOptions = {
+    tabBarLabel: 'About',
+    tabBarIcon: ({ focused }) => (
+        <Ionicon
+            name={"md-information-circle"}
+            color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
+            size={Layout.icon_size}
+        />
+    ),
+};
+
+
 
 export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
+    ScheduleStack,
+    FavoriteStack,
+    SpeakerStack,
+    GalleryStack,
+    AboutStack,
+}, {
+    tabBarOptions: {
+        activeTintColor: Colors.primaryColor,
+        inactiveTintColor : Colors.inactiveBarIconColor,
+    }
 });
