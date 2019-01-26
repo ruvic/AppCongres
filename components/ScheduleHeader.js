@@ -17,20 +17,15 @@ export default class ScheduleHeader extends React.Component{
     }
 
     _showSearchBar = () => {
-        if(!this.props.about){
+        if(this.props.searchBar){
             return (
                 <SearchContainer>
                     <SearchBar
                         lightTheme
                         containerStyle={styles.containerStyle}
                         inputStyle = {styles.inputStyle}
-                        leftIconContainerStyle={{ borderWidth:2, borderColor : 'red' }}
-                        rightIconContainerStyle = {{ borderWidth:2, borderColor : 'red' }}
-                        // clearIcon={{ color: 'red', width : 50, height:50 }}
-                        clearIcon={false}
-                        searchIcon={false}
                         onChangeText={this._onSearch}
-                        placeholder='Search' />
+                        placeholder={(!this.props.speaker) ? 'Tracks ...' : 'First name, last name or country ...' } />
                     <MaskViewTop/>
                     <MaskViewBottom/>
                 </SearchContainer>
@@ -42,10 +37,10 @@ export default class ScheduleHeader extends React.Component{
 
     render(){
         return(
-            <Container>
+            <Container elevation={(this.props.searchBar && !this.props.speaker) ? 0 : 8} searchBar={this.props.searchBar}>
                 <TitleContainer>
                     <Ionicon
-                        name={"md-menu"}
+                        name={this.props.icon}
                         color={Colors.errorText}
                         size={Layout.icon_size+5}
                     />
@@ -59,14 +54,14 @@ export default class ScheduleHeader extends React.Component{
 
 const Container = styled.View`
   background-color: ${Colors.primaryColor};
-  height: ${(props) => (props.about) ? 10 : Layout.window.height*0.22}px;
+  height: ${(props) => (props.searchBar) ? Layout.window.height*0.22 : 85}px;
 `;
 
 const TitleContainer = styled.View`
   flex-direction: row;
   margin-left: 20px;
   flex: 1;
-  margin-top: ${(Platform.OS == 'ios')?20:35}px;
+  margin-top: ${(Platform.OS == 'ios')?20:33}px;
   margin-bottom: 2px;
   align-items: center;
 `;
@@ -102,7 +97,6 @@ const styles = StyleSheet.create({
     inputStyle : {
         backgroundColor : 'white',
         paddingLeft: 35,
-        height : 40
     },
     containerStyle : {
         backgroundColor:'transparent',

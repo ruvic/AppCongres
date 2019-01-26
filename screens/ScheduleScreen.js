@@ -2,18 +2,33 @@ import React from 'react';
 import styled from 'styled-components';
 import ScheduleHeader from "../components/ScheduleHeader";
 import ScheduleNavigator from "../navigation/ScheduleNavigator";
+import {connect} from "react-redux";
 
 class ScheduleScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader title="SCHEDULE" onSearch={this.onSearch} />,
+        header : <ScheduleHeader searchBar title="SCHEDULE" icon="md-calendar" onSearch={this.onSearch} />,
     };
+
     onSearch = (text) => {
         console.log(text);
     };
 
     constructor(props){
         super(props);
+    }
+
+    componentDidMount(){
+        // const data = {
+        //   schedule : true,
+        //   navigation : this.props.navigation
+        // };
+        //
+        // const action = {
+        //     type: 'UPDATE_SCHEDULE_NAV',
+        //     value: data
+        // };
+        // this.props.dispatch(action);
     }
 
     render(){
@@ -29,4 +44,11 @@ const Container = styled.View`
   justify-content: center;
 `;
 
-export default ScheduleScreen;
+// const mapStateToProps = (state) => {
+//     return {
+//         GameGlobal: state.updateGameData.GameData
+//     }
+// };
+
+// export default connect(mapStateToProps)(ScheduleScreen);
+export default connect()(ScheduleScreen);

@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {AppLoading, Asset, Font, Icon} from 'expo';
 import MainTabNavigator from './navigation/MainTabNavigator';
+import {Provider} from "react-redux";
+import Store from './store/configStore'
 
 export default class App extends React.Component {
   state = {
@@ -19,11 +21,9 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        /*<View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>*/
-          <MainTabNavigator />
+          <Provider store={Store}>
+            <MainTabNavigator />
+          </Provider>
       );
     }
   }

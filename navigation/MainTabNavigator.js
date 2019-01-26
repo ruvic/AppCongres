@@ -31,7 +31,8 @@ ScheduleStack.navigationOptions = {
 };
 
 const FavoriteStack = createStackNavigator({
-    Home: FavoriteScheduleScreen,
+    FavoriteHome: FavoriteScheduleScreen,
+    FavoriteActivityDetails : ActivityDetailsScreen,
 });
 
 FavoriteStack.navigationOptions = {

@@ -6,7 +6,7 @@ import {Text} from "react-native";
 class AboutScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader about title="SPEAKERS" onSearch={this.onSearch} />,
+        header : <ScheduleHeader title="ABOUT" icon="md-information-circle"/>,
     };
 
     onSearch = (text) => {

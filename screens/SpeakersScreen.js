@@ -3,11 +3,12 @@ import {FlatList, StyleSheet} from 'react-native';
 import ScheduleHeader from "../components/ScheduleHeader";
 import {Body, Container, Content, Left, ListItem, Right, Text, Thumbnail} from 'native-base';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import {connect} from "react-redux";
 
 class SpeakersScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader title="SPEAKERS" onSearch={this.onSearch} />,
+        header : <ScheduleHeader speaker searchBar title="SPEAKERS" icon="md-contacts" onSearch={this.onSearch} />,
     };
 
     onSearch = (text) => {
@@ -43,7 +44,11 @@ class SpeakersScreen extends React.Component{
     };
 
     _onSpeakerItemClick(data){
-        console.log(data);
+        this.props.navigation.navigate("SpeakerDetails");
+    };
+
+    componentDidMount(){
+
     };
 
     render(){
@@ -75,4 +80,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SpeakersScreen;
+export default connect()(SpeakersScreen);
