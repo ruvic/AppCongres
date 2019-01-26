@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import styled from 'styled-components';
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
@@ -9,24 +9,16 @@ import {SearchBar} from 'react-native-elements';
 export default class ScheduleHeader extends React.Component{
 
     _onSearch = (text) =>{
-
+        //this.props.search(text);
     };
 
     constructor(props){
         super(props);
     }
 
-    render(){
-        return(
-            <Container>
-                <TitleContainer>
-                    <Ionicon
-                        name={"md-menu"}
-                        color={Colors.errorText}
-                        size={Layout.icon_size+5}
-                    />
-                    <Title>SCHEDULE</Title>
-                </TitleContainer>
+    _showSearchBar = () => {
+        if(!this.props.about){
+            return (
                 <SearchContainer>
                     <SearchBar
                         lightTheme
@@ -42,6 +34,24 @@ export default class ScheduleHeader extends React.Component{
                     <MaskViewTop/>
                     <MaskViewBottom/>
                 </SearchContainer>
+            )
+        }else{
+            <View/>
+        }
+    };
+
+    render(){
+        return(
+            <Container>
+                <TitleContainer>
+                    <Ionicon
+                        name={"md-menu"}
+                        color={Colors.errorText}
+                        size={Layout.icon_size+5}
+                    />
+                    <Title>{this.props.title}</Title>
+                </TitleContainer>
+                {this._showSearchBar()}
             </Container>
         )
     }
@@ -49,7 +59,7 @@ export default class ScheduleHeader extends React.Component{
 
 const Container = styled.View`
   background-color: ${Colors.primaryColor};
-  height: ${Layout.window.height*0.22}px;
+  height: ${(props) => (props.about) ? 10 : Layout.window.height*0.22}px;
 `;
 
 const TitleContainer = styled.View`

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Text} from 'react-native';
+import ActivityList from "../components/ActivityList";
 
 export default class FirstDayScreen extends React.Component{
 
@@ -15,7 +15,7 @@ export default class FirstDayScreen extends React.Component{
     render(){
         return(
             <Container>
-                <Text>Premier jour</Text>
+                <ActivityList/>
             </Container>
         )
     }

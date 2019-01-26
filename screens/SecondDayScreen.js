@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Text} from 'react-native';
+import ActivityList from "../components/ActivityList";
 
 export default class SecondDayScreen extends React.Component{
 
@@ -15,7 +15,7 @@ export default class SecondDayScreen extends React.Component{
     render(){
         return(
             <Container>
-                <Text>Deuxième jour</Text>
+                <ActivityList/>
             </Container>
         )
     }

@@ -6,7 +6,7 @@ import ScheduleNavigator from "../navigation/ScheduleNavigator";
 class ScheduleScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader onSearch={this.onSearch} />,
+        header : <ScheduleHeader title="SCHEDULE" onSearch={this.onSearch} />,
     };
     onSearch = (text) => {
         console.log(text);

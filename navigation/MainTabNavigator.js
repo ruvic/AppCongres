@@ -6,6 +6,7 @@ import FavoriteScheduleScreen from "../screens/FavoriteScheduleScreen";
 import SpeakersScreen from "../screens/SpeakersScreen";
 import GalleryScreen from "../screens/GalleryScreen";
 import AboutScreen from "../screens/AboutScreen";
+import ActivityDetailsScreen from "../screens/ActivityDetailsScreen";
 
 import Colors from "../constants/Colors";
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -53,7 +54,8 @@ import Layout from "../constants/Layout";
 // )
 
 const ScheduleStack = createStackNavigator({
-    Home: ScheduleScreen,
+    Schedule: ScheduleScreen,
+    ActivityDetails : ActivityDetailsScreen,
 });
 
 ScheduleStack.navigationOptions = {

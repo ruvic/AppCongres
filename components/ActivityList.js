@@ -1,12 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import ActivityList from "../components/ActivityList";
+import {Text} from 'react-native';
 
-export default class ThirdDayScreen extends React.Component{
-
-    static navigationOptions = {
-        title : 'FRI 05',
-    };
+export default class ActivityList extends React.Component{
 
     constructor(props){
         super(props);
@@ -15,7 +11,7 @@ export default class ThirdDayScreen extends React.Component{
     render(){
         return(
             <Container>
-                <ActivityList/>
+                <Text>Liste des activités</Text>
             </Container>
         )
     }
@@ -23,4 +19,6 @@ export default class ThirdDayScreen extends React.Component{
 
 const Container = styled.View`
   flex : 1;
+  justify-content: center;
+  align-items: center;
 `;
