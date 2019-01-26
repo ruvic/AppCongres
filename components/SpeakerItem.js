@@ -1,23 +1,10 @@
 import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import ScheduleHeader from "../components/ScheduleHeader";
+import styled from 'styled-components';
 import {Body, Container, Content, Left, ListItem, Right, Text, Thumbnail} from 'native-base';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
-class SpeakersScreen extends React.Component{
-
-    static navigationOptions = {
-        header : <ScheduleHeader title="SPEAKERS" onSearch={this.onSearch} />,
-    };
-
-    onSearch = (text) => {
-        console.log(text);
-    };
-
-    constructor(props){
-        super(props);
-    }
-
+export default class SpeakerItem extends React.Component{
 
     message = "Doing what you like will always keep you happy Doing what you like will always keep you happy Doing what you like will always keep you happy Doing what you like will always keep you happy";
     list = [0,1,2,3,4,5,6,7,8,9];
@@ -42,6 +29,10 @@ class SpeakersScreen extends React.Component{
         )
     };
 
+    constructor(props){
+        super(props);
+    }
+
     _onSpeakerItemClick(data){
         console.log(data);
     };
@@ -52,7 +43,7 @@ class SpeakersScreen extends React.Component{
                 <Content>
                     <FlatList
                         data={this.list}
-                        keyExtractor={(item, index) => ""+item}
+                        keyExtractor={(item, index) => item}
                         renderItem={this._renderItem}
                     />
                 </Content>
@@ -61,10 +52,14 @@ class SpeakersScreen extends React.Component{
     }
 }
 
+const MainContainer = styled.View`
+  flex: 1;
+`;
+
 const styles = StyleSheet.create({
     left : {
-        alignItems: 'center',
-        justifyContent:'center'
+       alignItems: 'center',
+       justifyContent:'center'
     },
     right : {
         alignItems: 'center',
@@ -74,5 +69,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 });
-
-export default SpeakersScreen;

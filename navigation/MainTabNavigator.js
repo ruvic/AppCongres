@@ -4,6 +4,7 @@ import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import ScheduleScreen from "../screens/ScheduleScreen";
 import FavoriteScheduleScreen from "../screens/FavoriteScheduleScreen";
 import SpeakersScreen from "../screens/SpeakersScreen";
+import SpeakersDetailsScreen from "../screens/SpeakerDetailsScreen";
 import GalleryScreen from "../screens/GalleryScreen";
 import AboutScreen from "../screens/AboutScreen";
 import ActivityDetailsScreen from "../screens/ActivityDetailsScreen";
@@ -12,46 +13,6 @@ import Colors from "../constants/Colors";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Layout from "../constants/Layout";
 
-
-// const createTab = (screen, icon) => ({
-//     screen: screen,
-//     navigationOptions: {
-//         tabBarIcon: ({focused}) => (
-//             <Ionicon
-//                 name={icon}
-//                 color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
-//                 size={Layout.icon_size}
-//             />
-//         )
-//     }
-// });
-//
-// export default MainTabNavigator = createMaterialTopTabNavigator(
-//     {
-//         Schedule: createTab(ScheduleScreen, "md-calendar"),
-//         FavoriteSchedule: createTab(FavoriteScheduleScreen, "md-star"),
-//         Speakers: createTab(SpeakersScreen, "md-contacts"),
-//         Gallery: createTab(GalleryScreen, "md-images"),
-//         About: createTab(AboutScreen, "md-information-circle")
-//     },
-//     {
-//         tabBarPosition: 'bottom',
-//         tabBarOptions : {
-//             labelStyle: {
-//                 fontSize: 8,
-//             },
-//             showLabel : true,
-//             showIcon : true,
-//             style: {
-//                 backgroundColor: Colors.tabBar
-//             },
-//             indicatorStyle: {
-//                 backgroundColor: Colors.primaryColor,
-//                 opacity: .8
-//             }
-//         },
-//     }
-// )
 
 const ScheduleStack = createStackNavigator({
     Schedule: ScheduleScreen,
@@ -86,7 +47,8 @@ FavoriteStack.navigationOptions = {
 };
 
 const SpeakerStack = createStackNavigator({
-    Home: SpeakersScreen,
+    SpeakerHome: SpeakersScreen,
+    SpeakerDetails: SpeakersDetailsScreen,
 });
 
 SpeakerStack.navigationOptions = {
