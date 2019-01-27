@@ -3,7 +3,7 @@ const initialState = {scheduleNavigation : {}}
 function updateGlobalData(state = initialState, action) {
     let nextState
     switch (action.type) {
-        case 'UPDATE_SCHEDULE_NAV' :
+        case 'UPDATE_SCHEDULE_AND_FAVORITE_NAV' :
             nextState = {
                 ...state,
                 scheduleNavigation : action.value

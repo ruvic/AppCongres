@@ -18,17 +18,31 @@ class ScheduleScreen extends React.Component{
         super(props);
     }
 
+    _componentFocused = ()=>{
+        const data = {
+            schedule : true,
+            navigation : this.props.navigation
+        };
+
+        const action = {
+            type: 'UPDATE_SCHEDULE_AND_FAVORITE_NAV',
+            value: data
+        };
+        this.props.dispatch(action);
+    };
+
     componentDidMount(){
-        // const data = {
-        //   schedule : true,
-        //   navigation : this.props.navigation
-        // };
-        //
-        // const action = {
-        //     type: 'UPDATE_SCHEDULE_NAV',
-        //     value: data
-        // };
-        // this.props.dispatch(action);
+
+        this._componentFocused();
+
+        this._sub = this.props.navigation.addListener(
+            'didFocus',
+            this._componentFocused
+        );
+    }
+
+    componentWillUnmount() {
+        this._sub.remove();
     }
 
     render(){

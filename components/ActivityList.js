@@ -10,12 +10,11 @@ class ActivityList extends React.Component{
     }
 
     _onclick = () => {
-        console.log(this.props);
-        // if(this.props.scheduleNavigation.schedule){
-        //     this.props.scheduleNavigation.navigation.navigate("ActivityDetails");
-        // }else{
-        //     this.props.scheduleNavigation.navigation.navigate("FavoriteActivityDetails");
-        // }
+        if(this.props.scheduleNavigation.schedule){
+            this.props.scheduleNavigation.navigation.navigate("ActivityDetails");
+        }else{
+            this.props.scheduleNavigation.navigation.navigate("FavoriteActivityDetails");
+        }
     };
 
     render(){
