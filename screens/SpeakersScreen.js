@@ -34,9 +34,9 @@ class SpeakersScreen extends React.Component{
                 </Body>
                 <Right style={styles.right}>
                     <Ionicon
-                        name={"md-arrow-dropright"}
-                        color={"black"}
-                        size={25}
+                        name={"ios-arrow-forward"}
+                        color={"grey"}
+                        size={21}
                     />
                 </Right>
             </ListItem>

@@ -17,4 +17,10 @@ export default {
     greyColor : '#5f625d',
     activeBarIconColor : '#5ea76d',
     inactiveBarIconColor : '#636363',
+    tracks : {
+        Food : '#5f625d',
+        CME : '#666804',
+        Symposium : '#dea601',
+        Abstracts : '#2aacd8',
+    }
 };

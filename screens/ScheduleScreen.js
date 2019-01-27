@@ -29,6 +29,7 @@ class ScheduleScreen extends React.Component{
             value: data
         };
         this.props.dispatch(action);
+
     };
 
     componentDidMount(){

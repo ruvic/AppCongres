@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-import ActivityList from "../components/ActivityList";
+import ActivityListItem from "../components/ActivityListItem";
 
-export default class ThirdDayScreen extends React.Component{
+class ThirdDayScreen extends React.Component{
 
     static navigationOptions = {
         title : 'FRI 05',
@@ -14,13 +13,9 @@ export default class ThirdDayScreen extends React.Component{
 
     render(){
         return(
-            <Container>
-                <ActivityList/>
-            </Container>
+            <ActivityListItem/>
         )
     }
 }
 
-const Container = styled.View`
-  flex : 1;
-`;
+export default ThirdDayScreen;
