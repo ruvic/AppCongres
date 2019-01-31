@@ -69,7 +69,7 @@ const Hour = styled.Text`
 const LineSeperator = styled.View`
   width: 100%;
   height: 1px;
-  background-color: grey;
+  background-color: #cacfca;
 `;
 
 const ActivityItems = styled.View`

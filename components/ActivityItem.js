@@ -96,7 +96,7 @@ class ActivityItem extends React.Component{
                         </StarContainer>
                     </RightContainer>
                 </ContentContainer>
-                <Divider style={{ height : 1, backgroundColor: 'grey' }} />
+                <Divider style={{ height : 1, backgroundColor: '#cacfca' }} />
             </Container>
         )
     }
