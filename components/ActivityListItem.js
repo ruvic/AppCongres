@@ -8,21 +8,35 @@ import {connect} from "react-redux";
 class ActivityListItem extends React.Component{
 
     onPress = (item) => {
-      console.log("On Click : "+item);
         if(this.props.scheduleNavigation.schedule){
-            this.props.scheduleNavigation.navigation.navigate("ActivityDetails");
+            this.props.scheduleNavigation.navigation.navigate("ActivityDetails", { tracks : this.tracks });
         }else{
-            this.props.scheduleNavigation.navigation.navigate("FavoriteActivityDetails");
+            this.props.scheduleNavigation.navigation.navigate("FavoriteActivityDetails", { tracks : this.tracks });
         }
     };
     _renderActivityItem = ({item}) => {
+
+        let tracks = "";
+        if(item === 0){
+            tracks = "Symposium";
+        }else if (item === 1){
+            tracks = "Food";
+        }else if (item === 2){
+            tracks = "Abstracts";
+        }else{
+            tracks = "CME";
+        }
+
+        this.tracks  = tracks;
+
         return (
             <ActivityItem
                 item={item}
-                tracks='Symposium'
+                tracks={tracks}
                 onPress={this.onPress} />
         )
     };
+    list = [0,1,2,3];
     _renderActivityListIem = ({item}) => {
         return (
             <Container>
@@ -38,10 +52,10 @@ class ActivityListItem extends React.Component{
             </Container>
         )
     };
-    list = [0,1,2];
 
     constructor(props){
         super(props);
+        this.tracks ="Symposium";
     }
 
     render(){

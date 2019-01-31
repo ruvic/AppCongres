@@ -70,7 +70,7 @@ class ActivityItem extends React.Component{
                                 color={color}
                                 size={16}
                             />
-                            <Title color={color} >Symposium 8</Title>
+                            <Title color={color}>Symposium 8</Title>
                         </TitleContainer>
                         <TimePeriod>02:30 PM - 04:00 PM</TimePeriod>
                         <Localisation>Room 2</Localisation>
@@ -90,7 +90,7 @@ class ActivityItem extends React.Component{
                         <StarContainer onPress={this._onFavorite}>
                             <Ionicon
                                 name={this.state.starIcon}
-                                color={color}
+                                color={'black'}
                                 size={24}
                             />
                         </StarContainer>

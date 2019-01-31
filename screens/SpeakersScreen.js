@@ -26,10 +26,10 @@ class SpeakersScreen extends React.Component{
         return (
             <ListItem avatar key={""+item} onPress={() => this._onSpeakerItemClick(item)}>
                 <Left style={styles.left}>
-                    <Thumbnail source={require('../assets/images/toto.jpg')} />
+                    <Thumbnail source={require('../assets/images/profile.jpg')} />
                 </Left>
                 <Body>
-                <Text style={styles.name}>Kumar Pratik</Text>
+                <Text style={styles.name}>Felix ASSAH</Text>
                 <Text numberOfLines={2} note>{this.message}</Text>
                 </Body>
                 <Right style={styles.right}>
