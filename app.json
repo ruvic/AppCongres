@@ -22,6 +22,12 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android" : {
+      "package" : "com.appcongres",
+      "versionCode" : 1,
+      "permissions" : [],
+      "icon" : "./assets/images/icon.png"
     }
   }
 }
