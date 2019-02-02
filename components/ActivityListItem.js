@@ -11,13 +11,12 @@ class ActivityListItem extends React.Component{
 
     onPress = (item) => {
         if(this.props.scheduleNavigation.schedule){
-            this.props.scheduleNavigation.navigation.navigate("ActivityDetails", { tracks : this.tracks });
+            this.props.scheduleNavigation.navigation.navigate("ActivityDetails", { sessionItem : item });
         }else{
-            this.props.scheduleNavigation.navigation.navigate("FavoriteActivityDetails", { tracks : this.tracks });
+            this.props.scheduleNavigation.navigation.navigate("FavoriteActivityDetails", { sessionItem : item });
         }
     };
     _renderActivityItem = ({item}) => {
-        console.log("Passage 2");
         return (
             <ActivityItem
                 item={item}
@@ -46,21 +45,11 @@ class ActivityListItem extends React.Component{
         )
     };
 
-    componentDidMount(){
-
-//        alert(JSON.stringify(this.props));
-
-        this.props.dispatch({
-            type : 'UPDATE_APP_DATAS',
-            action : this.props.appData,
-        });
-    }
-
     render(){
-        if(this.props.appData){
+        if(this.props.data){
             return(
                 <CustomFlatList
-                    data={objectToArray(this.props.appData.schedule[this.props.indexDay].groups)}
+                    data={objectToArray(this.props.data.schedule[this.props.indexDay].groups)}
                     keyExtractor={(item, index) => ''+item.time}
                     renderItem={({item}) => this._renderActivityListItem(item)}
                 />
@@ -101,9 +90,9 @@ const CustomFlatList = styled.FlatList`
   margin-bottom: 10px;
 `;
 const mapStateToProps = (state) => {
-    // alert(state.updateAppData.datas);
     return {
         scheduleNavigation : state.updateGlobalData.scheduleNavigation,
+        data : state.updateAppData.data,
     }
 };
 

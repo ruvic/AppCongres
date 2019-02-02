@@ -2,41 +2,48 @@ import React from 'react';
 import styled from 'styled-components';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import Colors from "../constants/Colors";
+import {connect} from "react-redux";
+import {objectToArray} from "../helpers/helpers";
 
 class ActivityDetailsScreen extends React.Component{
 
-    static navigationOptions = {
-        title: 'SYMPOSIUM 8',
-        headerStyle: {
-            backgroundColor: Colors.tracks.Symposium,
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-        },
+    static navigationOptions = ({navigation}) => {
+        const { params = {} } = navigation.state;
+        return {
+            title: params.sessionItem.name,
+            headerStyle: {
+                backgroundColor: Colors.tracks[params.sessionItem.tracks[0]],
+                color : 'white',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color : 'white',
+            },
+        };
     };
 
     constructor(props){
         super(props);
+        this.sessionItem = this.props.navigation.state.params.sessionItem;
     }
 
     _renderItem(item){
         return(
             <ItemContainer>
                 <Text>
-                    The patient with diabetes in surgery
+                    {item.description}
                 </Text>
                 <Text style={{textTransform:'uppercase', fontSize:16}}>
-                    02:30 PM - 02:55 PM
+                    {item.timeStart+' - '+item.timeEnd}
                 </Text>
-                <View style={{flexDirection: 'row'}}>
+                <Text style={{flexDirection: 'row', flexWrap:'wrap'}}>
                     <Text style={{fontWeight: '500'}}>
-                        Altienno JABANGO
+                        {this.props.data.speakers[item.speakerNames[0]].name+' '}
                     </Text>
                     <Text style={{marginLeft:5}}>
-                        (KENYA)
+                        {'('+this.props.data.speakers[item.speakerNames[0]].country+')'}
                     </Text>
-                </View>
+                </Text>
             </ItemContainer>
         );
     }
@@ -44,28 +51,43 @@ class ActivityDetailsScreen extends React.Component{
     render(){
         return(
             <Container contentContainerStyle={styles.container}>
-                <TitleViewPage>
+                <TitleViewPage tracks={Colors.tracks[this.sessionItem.tracks[0]]}>
                     <TitleTextPage>
-                        Symposium 8
+                        {this.sessionItem.name}
                     </TitleTextPage>
                 </TitleViewPage>
                 <HeaderView>
-                    <Text>Chairs </Text>
-                    <Text style={{fontWeight: 'bold'}}>M. Marre </Text>
-                    <Text>(France)</Text>
+                    <Text style={{ flexWrap: 'wrap' }} >Chairs : </Text>
+                    {
+                        (this.sessionItem.chairsNames) ?
+                            objectToArray(this.sessionItem.chairsNames).map((chair) => {
+                                return(
+                                    <View style={{ flexDirection:'row'}}>
+                                        <Text style={{fontWeight: 'bold'}}>{this.props.data.speakers[chair].name+' '}</Text>
+                                        <Text>{'('+this.props.data.speakers[chair].country+')'}</Text>
+                                    </View>
+                                )
+                            })
+                        : <Text/>
+                    }
                 </HeaderView>
                 <HeaderView>
-                    <Text>02:30 PM - 04:00 PM</Text>
+                    <Text>{this.sessionItem.timeStart+' - '+this.sessionItem.timeEnd}</Text>
                 </HeaderView>
                 <Details>
-                    <RomText>Room 2</RomText>
-                    <TitleText>Diabetes and surgical emergencies</TitleText>
+                    <RomText tracks={Colors.tracks[this.sessionItem.tracks[0]]}>{this.sessionItem.location}</RomText>
+                    <TitleText>{this.sessionItem.description}</TitleText>
                 </Details>
                 <ContentList>
-                    <FlatList
-                        data={[{key: 'a'}, {key: 'b'}, {key: 'c'}, {key: 'd'}, {key: 'e'}, {key: 'f'}, {key: 'g'}, {key: 'h'}, {key: 'i'}]}
-                        renderItem={({item}) => this._renderItem(item)}
-                    />
+                    {
+                        (this.sessionItem.programme)?
+                            <FlatList
+                                data={objectToArray(this.sessionItem.programme)}
+                                keyExtractor={(item, index) => ''+item.id}
+                                renderItem={({item}) => this._renderItem(item)}
+                            />
+                        : <View/>
+                    }
                 </ContentList>
             </Container>
         )
@@ -75,6 +97,7 @@ class ActivityDetailsScreen extends React.Component{
 const Container = styled.ScrollView`
   flex : 1;
   margin-top: 5px;
+  background: #fff;
 `;
 
 const HeaderView = styled.View`
@@ -89,7 +112,7 @@ const Details = styled.View`
 `;
 
 const RomText=styled.Text`
-  color: #dea600;
+  color: ${ props => props.tracks};
   font-size: 16px;
 `;
 
@@ -113,15 +136,15 @@ const TitleViewPage = styled.View`
     margin-top:5px;
     width: 90%;
     border-left-width: 4px;
-    border-left-color: #dea600;
+    border-left-color: ${ props => props.tracks};
     padding: 2px;
 `;
 const TitleTextPage = styled.Text`    
     text-align:left ;
     font-size: 22px;
-    font-weight: 100;
     padding-left: 2%;
     opacity: 1;
+    flex-wrap: wrap;
 `;
 
 const DetailHeader = styled.View`
@@ -147,5 +170,11 @@ const styles = StyleSheet.create({
     },
 
 });
+const mapStateToProps = (state) => {
+    return {
+        scheduleNavigation : state.updateGlobalData.scheduleNavigation,
+        data : state.updateAppData.data,
+    }
+};
 
-export default ActivityDetailsScreen;
+export default connect(mapStateToProps)(ActivityDetailsScreen);

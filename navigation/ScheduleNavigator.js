@@ -22,9 +22,9 @@ import Colors from "../constants/Colors";
 
 export default ScheduleNavigator = createMaterialTopTabNavigator(
     {
-        FirstDay: {screen:FirstDayScreen},
-        SecondDay: {screen:SecondDayScreen},
-        ThirdDay: {screen:ThirdDayScreen},
+        FirstDay: FirstDayScreen,
+        SecondDay: SecondDayScreen,
+        ThirdDay: ThirdDayScreen,
     },
     {
         tabBarPosition: 'top',

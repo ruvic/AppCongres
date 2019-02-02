@@ -1,22 +1,30 @@
 import React from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Image, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components';
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {SearchBar} from 'react-native-elements';
-import AboutModal from "./AboutModal";
+import Modal from 'react-native-modal';
 
 export default class ScheduleHeader extends React.Component{
+
+    onAbout = () => {
+        this.setState({
+            ModalIsVisible : true,
+        });
+    };
 
     _onSearch = (text) =>{
 
     };
-    onClose = () => {
-        this.setState({
-            ModalIsVisible : !this.state.ModalIsVisible,
-        });
-    };
+    _renderButton = (text, onPress) => (
+        <TouchableOpacity onPress={onPress}>
+            <View style={styles.button}>
+                <Text style={{ color : 'white' }}>{text}</Text>
+            </View>
+        </TouchableOpacity>
+    );
     _showSearchBar = () => {
         if(this.props.searchBar){
             return (
@@ -35,11 +43,23 @@ export default class ScheduleHeader extends React.Component{
             <View/>
         }
     };
+    _renderModalContent = () => (
+        <View style={styles.modalContent}>
+            <Image style={styles.logo} source={require('../assets/images/logo.png')} />
+            <Text style={styles.dateAbout}>03 Wed - 05 Fri January 2019!</Text>
+            <Text style={styles.dateAbout}>Yaounde , Palais de Sport!</Text>
+            <Text style={{textAlign:"center"}}>
+                Voici la description du texte concernant levenement, organise par tantantan et sponsorise par
+                wafo wambo harrold douglas
+            </Text>
+            {this._renderButton('Close', () => this.setState({ ModalIsVisible: false}))}
+        </View>
+    );
 
     constructor(props){
         super(props);
         this.state = {
-            ModalIsVisible : false
+            ModalIsVisible : null
         };
     }
 
@@ -47,8 +67,12 @@ export default class ScheduleHeader extends React.Component{
         return(
             <Container elevation={(this.props.searchBar && !this.props.speaker) ? 0 : 8} searchBar={this.props.searchBar}>
                 <TitleContainer>
-                    <AboutModal isVisible={this.state.ModalIsVisible} onClose={this.onClose} />
-                    <IconContainer onPress={this.onClose}>
+                    <View style={styles.container}>
+                        <Modal isVisible={this.state.ModalIsVisible}>
+                            {this._renderModalContent()}
+                        </Modal>
+                    </View>
+                    <IconContainer onPress={this.onAbout}>
                         <Ionicon
                             name={"md-menu"}
                             color={Colors.errorText}
@@ -85,7 +109,7 @@ const Title = styled.Text`
   font-size: 20px;
   color: #fff;
   margin-left: 20px;
-  font-weight: 400;
+  font-weight: bold;
 `;
 const SearchContainer = styled.View`
   padding-top: 2px;
@@ -118,4 +142,39 @@ const styles = StyleSheet.create({
         padding:0,
         margin : 0,
     },
+    container: {
+        flex : 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position:'absolute',
+    },
+    button: {
+        backgroundColor: Colors.primaryColor,
+        padding: 12,
+        margin: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        padding: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
+    bottomModal: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+    logo:{
+        height:150,
+        width: 150
+    },
+    dateAbout:{
+        fontWeight:"bold",
+        fontSize:20
+    }
 });

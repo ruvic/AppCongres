@@ -62,7 +62,7 @@ class ActivityItem extends React.Component{
         const theme = this._theme(this.props.tracks);
         const color = theme.color;
         const icon = theme.icon;
-        const { item } = this.props;
+        const {item} = this.props;
         return(
             <Container>
                 <StarContainer onPress={this._onFavorite}>
@@ -92,8 +92,8 @@ class ActivityItem extends React.Component{
                                         objectToArray(item.chairsNames).map((chair) => {
                                             return(
                                                 <Text style={{ flexDirection:'row'}}>
-                                                    <ChairName>{' '+chair}</ChairName>
-                                                    <ChairInfo>{' ('+chair+')'}</ChairInfo>
+                                                    <ChairName>{' '+this.props.data.speakers[chair].name}</ChairName>
+                                                    <ChairInfo>{' ('+this.props.data.speakers[chair].country+')'}</ChairInfo>
                                                 </Text>
                                             )
                                         })
@@ -187,9 +187,8 @@ const ChairName = styled(ChairInfo)`
 `;
 
 const mapStateToProps = (state) => {
-    // alert(state.updateAppData.datas);
     return {
-        Datas : state.updateAppData.datas,
+        data : state.updateAppData.data,
     }
 };
 

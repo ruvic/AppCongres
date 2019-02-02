@@ -31,8 +31,6 @@ class ScheduleScreen extends React.Component{
         };
         this.props.dispatch(action);
 
-        alert(JSON.stringify(data));
-
     };
 
     componentDidMount(){

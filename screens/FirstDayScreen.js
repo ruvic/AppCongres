@@ -10,23 +10,29 @@ class FirstDayScreen extends React.Component{
         title : 'WED 03',
     };
 
+    // static navigationOptions = ({navigation}) => {
+    //     // const { params = {} } = navigation.state;
+    //     return {
+    //         title: 'abc',
+    //     };
+    // };
+
     updateData = (data) => {
-        this.setState({
-            data : data
+        this.props.dispatch({
+            type : 'UPDATE_APP_DATA',
+            value : data,
         });
+
     };
 
     constructor(props){
         super(props);
-        this.state = {
-            data : null
-        };
         getFirebaseData(this.updateData);
     }
 
     render(){
         return(
-            <ActivityListItem appData={this.state.data} indexDay={1}/>
+            <ActivityListItem indexDay={1}/>
         )
     }
 }
