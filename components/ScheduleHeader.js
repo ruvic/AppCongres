@@ -5,17 +5,18 @@ import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {SearchBar} from 'react-native-elements';
+import AboutModal from "./AboutModal";
 
 export default class ScheduleHeader extends React.Component{
 
     _onSearch = (text) =>{
-        //this.props.search(text);
+
     };
-
-    constructor(props){
-        super(props);
-    }
-
+    onClose = () => {
+        this.setState({
+            ModalIsVisible : !this.state.ModalIsVisible,
+        });
+    };
     _showSearchBar = () => {
         if(this.props.searchBar){
             return (
@@ -25,7 +26,7 @@ export default class ScheduleHeader extends React.Component{
                         containerStyle={styles.containerStyle}
                         inputStyle = {styles.inputStyle}
                         onChangeText={this._onSearch}
-                        placeholder={(!this.props.speaker) ? 'Tracks ...' : 'First name, last name or country ...' } />
+                        placeholder={(!this.props.speaker) ? 'Track ...' : 'First name, last name or country ...' } />
                     <MaskViewTop/>
                     <MaskViewBottom/>
                 </SearchContainer>
@@ -35,15 +36,25 @@ export default class ScheduleHeader extends React.Component{
         }
     };
 
+    constructor(props){
+        super(props);
+        this.state = {
+            ModalIsVisible : false
+        };
+    }
+
     render(){
         return(
             <Container elevation={(this.props.searchBar && !this.props.speaker) ? 0 : 8} searchBar={this.props.searchBar}>
                 <TitleContainer>
-                    <Ionicon
-                        name={this.props.icon}
-                        color={Colors.errorText}
-                        size={Layout.icon_size+5}
-                    />
+                    <AboutModal isVisible={this.state.ModalIsVisible} onClose={this.onClose} />
+                    <IconContainer onPress={this.onClose}>
+                        <Ionicon
+                            name={"md-menu"}
+                            color={Colors.errorText}
+                            size={Layout.icon_size+5}
+                        />
+                    </IconContainer>
                     <Title>{this.props.title}</Title>
                 </TitleContainer>
                 {this._showSearchBar()}
@@ -64,6 +75,10 @@ const TitleContainer = styled.View`
   margin-top: ${(Platform.OS == 'ios')?20:33}px;
   margin-bottom: 2px;
   align-items: center;
+`;
+
+const IconContainer = styled.TouchableOpacity`
+  
 `;
 
 const Title = styled.Text`

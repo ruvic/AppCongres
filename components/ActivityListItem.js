@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import ActivityItem from "./ActivityItem";
-import {FlatList} from 'react-native';
+import {ActivityIndicator, FlatList, View} from 'react-native';
 import {connect} from "react-redux";
+import {objectToArray} from "../helpers/helpers";
+import Colors from "../constants/Colors";
 
 
 class ActivityListItem extends React.Component{
@@ -15,37 +17,28 @@ class ActivityListItem extends React.Component{
         }
     };
     _renderActivityItem = ({item}) => {
-
-        let tracks = "";
-        if(item === 0){
-            tracks = "Symposium";
-        }else if (item === 1){
-            tracks = "Food";
-        }else if (item === 2){
-            tracks = "Abstracts";
-        }else{
-            tracks = "CME";
-        }
-
-        this.tracks  = tracks;
-
+        console.log("Passage 2");
         return (
             <ActivityItem
                 item={item}
-                tracks={tracks}
+                tracks={item.tracks[0]}
                 onPress={this.onPress} />
         )
     };
-    list = [0,1,2,3];
-    _renderActivityListIem = ({item}) => {
+
+    constructor(props){
+        super(props);
+    }
+
+    _renderActivityListItem(item){
         return (
             <Container>
-                <Hour>02:30 PM</Hour>
+                <Hour>{item.time}</Hour>
                 <LineSeperator/>
                 <ActivityItems>
                     <FlatList
-                        data={this.list}
-                        keyExtractor={(item, index) => ""+item}
+                        data={objectToArray(item.sessions)}
+                        keyExtractor={(item, index) => ''+item.id}
                         renderItem={this._renderActivityItem}
                     />
                 </ActivityItems>
@@ -53,19 +46,33 @@ class ActivityListItem extends React.Component{
         )
     };
 
-    constructor(props){
-        super(props);
-        this.tracks ="Symposium";
+    componentDidMount(){
+
+//        alert(JSON.stringify(this.props));
+
+        this.props.dispatch({
+            type : 'UPDATE_APP_DATAS',
+            action : this.props.appData,
+        });
     }
 
     render(){
-        return(
-            <CustomFlatList
-                data={this.list}
-                keyExtractor={(item, index) => ""+item}
-                renderItem={this._renderActivityListIem}
-            />
-        )
+        if(this.props.appData){
+            return(
+                <CustomFlatList
+                    data={objectToArray(this.props.appData.schedule[this.props.indexDay].groups)}
+                    keyExtractor={(item, index) => ''+item.time}
+                    renderItem={({item}) => this._renderActivityListItem(item)}
+                />
+            )
+        }else{
+            return(
+                <View style={{ flex : 1, alignItems:'center', justifyContent:'center' }}>
+                    <ActivityIndicator size="large" color={Colors.primaryColor}/>
+                </View>
+            )
+        }
+
     }
 }
 
@@ -94,8 +101,9 @@ const CustomFlatList = styled.FlatList`
   margin-bottom: 10px;
 `;
 const mapStateToProps = (state) => {
+    // alert(state.updateAppData.datas);
     return {
-        scheduleNavigation : state.updateGlobalData.scheduleNavigation
+        scheduleNavigation : state.updateGlobalData.scheduleNavigation,
     }
 };
 

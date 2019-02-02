@@ -22,7 +22,7 @@ export default class App extends React.Component {
     } else {
       return (
           <Provider store={Store}>
-            <MainTabNavigator />
+              <MainTabNavigator />
           </Provider>
       );
     }

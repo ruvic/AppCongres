@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Colors from "../constants/Colors";
 import Divider from "react-native-elements/src/divider/Divider";
+import {Text} from "react-native";
+import {objectToArray} from "../helpers/helpers";
+import {connect} from "react-redux";
 
 class ActivityItem extends React.Component{
 
@@ -59,8 +62,16 @@ class ActivityItem extends React.Component{
         const theme = this._theme(this.props.tracks);
         const color = theme.color;
         const icon = theme.icon;
+        const { item } = this.props;
         return(
             <Container>
+                <StarContainer onPress={this._onFavorite}>
+                    <Ionicon
+                        name={this.state.starIcon}
+                        color={'black'}
+                        size={24}
+                    />
+                </StarContainer>
                 <ContentContainer onPress={() => this.props.onPress(this.props.item)} >
                     <VerticalBar color={color} />
                     <Content>
@@ -70,16 +81,26 @@ class ActivityItem extends React.Component{
                                 color={color}
                                 size={16}
                             />
-                            <Title color={color}>Symposium 8</Title>
+                            <Title color={color}>{item.name}</Title>
                         </TitleContainer>
-                        <TimePeriod>02:30 PM - 04:00 PM</TimePeriod>
-                        <Localisation>Room 2</Localisation>
-                        <ChairInfo style={{ flexWrap: 'wrap' }} >Chairs :
-                            <ChairName> M. MARRE</ChairName>
-                            <ChairInfo> (FRANCE) </ChairInfo>
-                            <ChairName>Charles ROTIMI</ChairName>
-                            <ChairInfo> (USA) </ChairInfo>
-                        </ChairInfo>
+                        <TimePeriod>{item.timeStart+' - '+item.timeEnd}</TimePeriod>
+                        <Localisation>{item.location}</Localisation>
+                        {
+                            <ChairInfo style={{ flexWrap: 'wrap' }} >Chairs :
+                                {
+                                    (item.chairsNames) ?
+                                        objectToArray(item.chairsNames).map((chair) => {
+                                            return(
+                                                <Text style={{ flexDirection:'row'}}>
+                                                    <ChairName>{' '+chair}</ChairName>
+                                                    <ChairInfo>{' ('+chair+')'}</ChairInfo>
+                                                </Text>
+                                            )
+                                        })
+                                    : <Text></Text>
+                                }
+                            </ChairInfo>
+                        }
                     </Content>
                     <RightContainer>
                         <Ionicon
@@ -87,13 +108,6 @@ class ActivityItem extends React.Component{
                             color={'grey'}
                             size={21}
                         />
-                        <StarContainer onPress={this._onFavorite}>
-                            <Ionicon
-                                name={this.state.starIcon}
-                                color={'black'}
-                                size={24}
-                            />
-                        </StarContainer>
                     </RightContainer>
                 </ContentContainer>
                 <Divider style={{ height : 1, backgroundColor: '#cacfca' }} />
@@ -103,7 +117,10 @@ class ActivityItem extends React.Component{
 }
 
 const Container = styled.View`
+  align-items: center;
+  justify-content: center;
   margin-top: 10px;
+  flex-direction: row;
 `;
 
 const ContentContainer = styled.TouchableOpacity`
@@ -122,10 +139,8 @@ const VerticalBar = styled.View`
 `;
 
 const StarContainer = styled.TouchableOpacity`
-  position: absolute;
   align-items: center;
   justify-content: center;
-  bottom: 0px;
   width: 30px;
   height: 30px;
 `;
@@ -171,4 +186,11 @@ const ChairName = styled(ChairInfo)`
   font-weight: bold;
 `;
 
-export default ActivityItem;
+const mapStateToProps = (state) => {
+    // alert(state.updateAppData.datas);
+    return {
+        Datas : state.updateAppData.datas,
+    }
+};
+
+export default connect(mapStateToProps)(ActivityItem);

@@ -1,5 +1,5 @@
 import React from 'react';
-import ActivityListItem from "../components/ActivityListItem";
+import {Text} from "react-native";
 
 class ThirdDayScreen extends React.Component{
 
@@ -13,9 +13,15 @@ class ThirdDayScreen extends React.Component{
 
     render(){
         return(
-            <ActivityListItem/>
+            <Text>fdfsd</Text>
         )
     }
+
+    // render(){
+    //     return(
+    //         <ActivityListItem indexDay={2} />
+    //     )
+    // }
 }
 
 export default ThirdDayScreen;

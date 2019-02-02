@@ -6,16 +6,16 @@ import FavoriteScheduleScreen from "../screens/FavoriteScheduleScreen";
 import SpeakersScreen from "../screens/SpeakersScreen";
 import SpeakersDetailsScreen from "../screens/SpeakerDetailsScreen";
 import GalleryScreen from "../screens/GalleryScreen";
-import AboutScreen from "../screens/AboutScreen";
 import ActivityDetailsScreen from "../screens/ActivityDetailsScreen";
 
 import Colors from "../constants/Colors";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Layout from "../constants/Layout";
+import NotificationScreen from "../screens/NotificationScreen";
 
 
 const ScheduleStack = createStackNavigator({
-    Schedule: ScheduleScreen,
+    Schedule : ScheduleScreen,
     ActivityDetails : ActivityDetailsScreen,
 });
 
@@ -78,15 +78,15 @@ GalleryStack.navigationOptions = {
     ),
 };
 
-const AboutStack = createStackNavigator({
-    Home: AboutScreen,
+const NotifStack = createStackNavigator({
+    Home: NotificationScreen,
 });
 
-AboutStack.navigationOptions = {
-    tabBarLabel: 'About',
+NotifStack.navigationOptions = {
+    tabBarLabel: 'News',
     tabBarIcon: ({ focused }) => (
         <Ionicon
-            name={"md-information-circle"}
+            name={"md-notifications-outline"}
             color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
             size={Layout.icon_size}
         />
@@ -100,7 +100,7 @@ export default createBottomTabNavigator({
     FavoriteStack,
     SpeakerStack,
     GalleryStack,
-    AboutStack,
+    NotifStack,
 }, {
     tabBarOptions: {
         activeTintColor: Colors.primaryColor,

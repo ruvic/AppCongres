@@ -19,6 +19,7 @@ class ScheduleScreen extends React.Component{
     }
 
     _componentFocused = ()=>{
+
         const data = {
             schedule : true,
             navigation : this.props.navigation
@@ -29,6 +30,8 @@ class ScheduleScreen extends React.Component{
             value: data
         };
         this.props.dispatch(action);
+
+        alert(JSON.stringify(data));
 
     };
 

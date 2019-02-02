@@ -68,11 +68,7 @@ class SpeakerDetailsScreen extends React.Component{
                         CAMEROUN
                     </Text>
                     <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'center'}}>
-                        <Text>
-                        <Icon
-                            style={{fontSize:16, marginTop:2}}
-                            name={"ios-mail"}
-                            color="green"/> elle@exemple.com</Text>
+                        <Titre>DG de Camtel</Titre>
                     </View>
                 </ProfilInfos>
                 <View style={{padding: 5}}>
@@ -125,6 +121,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        flex:1,
     },
     profilImage: {
         width:150,
@@ -167,6 +164,10 @@ const HeadAccordion = styled.View`
     padding-left:30px;
     padding-right:30px;
     width:100%;
+`;
+
+const Titre = styled.Text`
+  font-weight: bold;
 `;
 
 export default SpeakerDetailsScreen;
