@@ -57,19 +57,20 @@ class ActivityDetailsScreen extends React.Component{
                     </TitleTextPage>
                 </TitleViewPage>
                 <HeaderView>
-                    <Text style={{ flexWrap: 'wrap' }} >Chairs : </Text>
-                    {
-                        (this.sessionItem.chairsNames) ?
-                            objectToArray(this.sessionItem.chairsNames).map((chair) => {
-                                return(
-                                    <View style={{ flexDirection:'row'}}>
-                                        <Text style={{fontWeight: 'bold'}}>{this.props.data.speakers[chair].name+' '}</Text>
-                                        <Text>{'('+this.props.data.speakers[chair].country+')'}</Text>
-                                    </View>
-                                )
-                            })
-                        : <Text/>
-                    }
+                    <Text style={{flexWrap:'wrap', flexDirection:'row' }}>Chairs :
+                        {
+                            (this.sessionItem.chairsNames) ?
+                                objectToArray(this.sessionItem.chairsNames).map((chair) => {
+                                    return(
+                                        <Text>
+                                            <Text style={{fontWeight: 'bold'}}>{this.props.data.speakers[chair].name+' '}</Text>
+                                            <Text>{'('+this.props.data.speakers[chair].country+')'}</Text>
+                                        </Text>
+                                    )
+                                })
+                            : <Text/>
+                        }
+                    </Text>
                 </HeaderView>
                 <HeaderView>
                     <Text>{this.sessionItem.timeStart+' - '+this.sessionItem.timeEnd}</Text>
