@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ViewMoreText from "react-native-view-more-text";
 import {Collapse, CollapseBody, CollapseHeader} from "accordion-collapse-react-native";
 import Colors from "../constants/Colors";
+import {connect} from "react-redux";
+import {objectToArray} from "../helpers/helpers";
 
 class SpeakerDetailsScreen extends React.Component{
 
@@ -23,6 +25,17 @@ class SpeakerDetailsScreen extends React.Component{
     constructor(props) {
         super(props);
         this.state = { icons1: "md-arrow-dropdown",  icons2: "md-arrow-dropdown"};
+    }
+
+    _showActivityItem = ({item}) => {
+        return(
+            <View style={{ borderBottomColor : Colors.lineSeparator, borderBottomWidth:1 }}>
+                <Text style={{textAlign:"center",color:Colors.tracks.Symposium, fontSize:16}}>{item.name}</Text>
+                <Text style={{textAlign:"center"}}>{item.timeStart + ' - '+item.timeEnd}</Text>
+                <Text style={{textAlign:"center"}}>{item.date}</Text>
+                <Text style={{textAlign:"center"}}>{item.location}</Text>
+            </View>
+        )
     }
 
     renderViewMore(onPress){
@@ -45,30 +58,52 @@ class SpeakerDetailsScreen extends React.Component{
         this.isCollapsed = !this.isCollapsed;
     }
 
-    _showActivityItem(item){
-        return(
-            <View style={{ borderBottomColor : Colors.lineSeparator, borderBottomWidth:1 }}>
-                <Text style={{textAlign:"center",color:Colors.tracks.Symposium, fontSize:16}}>Sympositum 8</Text>
-                <Text style={{textAlign:"center"}}>02:30PM - 04:00PM</Text>
-                <Text style={{textAlign:"center"}}>wed 03</Text>
-                <Text style={{textAlign:"center"}}>Room 2</Text>
-            </View>
-        )
+    _speakersSessions(item){
+        var scheduleList = objectToArray(this.props.data.schedule);
+        var result ={
+            moderateurs: [],
+            orateurs : [],
+        };
+        scheduleList.forEach((schedule) => {
+            objectToArray(schedule.groups).forEach((group) => {
+                objectToArray(group.sessions).forEach((session) => {
+
+
+                    if(session.chairsNames && objectToArray(session.chairsNames).indexOf(item.id+'')>=0){
+                        session["date"] = schedule.date;
+                        result.moderateurs.push(session);
+                    }
+
+                    if(session.programme){
+                        objectToArray(session.programme).forEach((programme) => {
+                            if(objectToArray(programme.speakerNames).indexOf(item.id+'')>=0){
+                                session["date"] = schedule.date;
+                                result.orateurs.push(session);
+                            }
+                        });
+                    }
+
+                });
+            });
+        });
+        return result;
     }
 
     render(){
+        const item = this.props.navigation.state.params.item;
+        const speakersSession = this._speakersSessions(item);
         return(
             <Container contentContainerStyle={styles.container}>
                 <ProfilInfos>
                     <Image source={require('../assets/images/profil.png')} style={styles.profilImage}/>
                     <Text style={styles.nameProfil}>
-                        Felix ASSAH
+                        {item.name}
                     </Text>
                     <Text style={styles.countryProfil}>
-                        CAMEROUN
+                        {item.country}
                     </Text>
                     <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'center'}}>
-                        <Titre>DG de Camtel</Titre>
+                        <Titre>{"Poste de travail Manquant"}</Titre>
                     </View>
                 </ProfilInfos>
                 <View style={{padding: 5}}>
@@ -78,10 +113,7 @@ class SpeakerDetailsScreen extends React.Component{
                         renderViewLess={this.renderViewLess}
                         textStyle={{textAlign: 'justify', padding:15, paddingBottom:0}}>
                         <Text style={{ textAlign : 'center' }} >
-                            klflkqsdf fjqslf mfsqlkfj qdmf fjdklsfm jlsfdsfjl flsfjslfk jfsflsjfks fqflksjf
-                            klflkqsdf fjqslf mfsqlkfj qdmf fjdklsfm jlsfdsfjl flsfjslfk jfsflsjfks fqflksjf
-                            read more... mlsjfs fsdfus fsdjf sdfjf sdfjf sdfs fsjf dsfjfs fsdfjfs dfsdjfs dfsdjfsma
-                            125 fd5fd f 8fs8fds 8df 8sdffs/fds8f dsf/ fsdfds/f d8s/aa/ // /fdfdf8 8fd8fd8s56  66f6df
+                            {item.about}
                         </Text>
                     </ViewMoreText>
                 </View>
@@ -94,8 +126,15 @@ class SpeakerDetailsScreen extends React.Component{
                         </HeadAccordion>
                     </CollapseHeader>
                     <CollapseBody style={{textAlign:"Center",padding:5}}>
-                        {this._showActivityItem(null)}
-                        {this._showActivityItem(null)}
+                        {
+                            (objectToArray(speakersSession.moderateurs).length > 0)?
+                                <FlatList
+                                    data={objectToArray(speakersSession.moderateurs)}
+                                    keyExtractor={(item, index) => item.id+""+(String(item.location).split(' ')[1])}
+                                    renderItem={this._showActivityItem}
+                                />
+                            : <View/>
+                        }
                     </CollapseBody>
                 </Collapse>
                 <Collapse style={{marginTop:10}} >
@@ -106,8 +145,15 @@ class SpeakerDetailsScreen extends React.Component{
                         </HeadAccordion>
                     </CollapseHeader>
                     <CollapseBody style={{textAlign:"Center",padding:5}}>
-                        {this._showActivityItem(null)}
-                        {this._showActivityItem(null)}
+                        {
+                            (objectToArray(speakersSession.orateurs).length > 0)?
+                                <FlatList
+                                    data={objectToArray(speakersSession.orateurs)}
+                                    keyExtractor={(item, index) => item.id+""+(String(item.location).split(' ')[1])}
+                                    renderItem={this._showActivityItem}
+                                />
+                                : <View/>
+                        }
                     </CollapseBody>
                 </Collapse>
             </Container>
@@ -119,8 +165,7 @@ class SpeakerDetailsScreen extends React.Component{
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+
         flex:1,
     },
     profilImage: {
@@ -170,4 +215,10 @@ const Titre = styled.Text`
   font-weight: bold;
 `;
 
-export default SpeakerDetailsScreen;
+const mapStateToProps = (state) => {
+    return {
+        data: state.updateAppData.data
+    }
+};
+
+export default connect(mapStateToProps)(SpeakerDetailsScreen);

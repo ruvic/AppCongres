@@ -32,7 +32,7 @@ class FirstDayScreen extends React.Component{
 
     render(){
         return(
-            <ActivityListItem indexDay={1}/>
+            <ActivityListItem indexDay={0}/>
         )
     }
 }
