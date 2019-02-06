@@ -6,6 +6,7 @@ import Divider from "react-native-elements/src/divider/Divider";
 import {Text} from "react-native";
 import {objectToArray} from "../helpers/helpers";
 import {connect} from "react-redux";
+import {store} from "../storage/Storage";
 
 class ActivityItem extends React.Component{
 
@@ -45,6 +46,7 @@ class ActivityItem extends React.Component{
     };
 
     _onFavorite = () => {
+
         this.setState({
            starIcon : (this.state.isFavorite) ? 'md-star-outline' : 'md-star',
            isFavorite : !this.state.isFavorite,
@@ -60,6 +62,9 @@ class ActivityItem extends React.Component{
            type : 'UPDATE_APP_DATA',
            value : data
         });
+
+        //store it persistently
+        store("data", data);
 
     };
 
@@ -78,13 +83,17 @@ class ActivityItem extends React.Component{
         const {item} = this.props;
         return(
             <Container>
-                <StarContainer onPress={this._onFavorite}>
-                    <Ionicon
-                        name={this.state.starIcon}
-                        color={'black'}
-                        size={24}
-                    />
-                </StarContainer>
+                {
+                    (!this.props.isFavorite) ?
+                        <StarContainer onPress={this._onFavorite}>
+                            <Ionicon
+                                name={this.state.starIcon}
+                                color={'black'}
+                                size={24}
+                            />
+                        </StarContainer>
+                    : null
+                }
                 <ContentContainer onPress={() => this.props.onPress(this.props.item)} >
                     <VerticalBar color={color} />
                     <Content>

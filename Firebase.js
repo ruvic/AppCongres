@@ -18,10 +18,10 @@ firebase.initializeApp(config);
 export function getFirebaseData(callback){
     try {
         firebase.database().ref('data').on('value', (data) => {
-            store("datas", data.toJSON());
+            store("data", data.toJSON());
             callback(data.toJSON());
         });
     }catch (e){
-        retrieve("datas", callback);
+        retrieve("data", callback);
     }
 }

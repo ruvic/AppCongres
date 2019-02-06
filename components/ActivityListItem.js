@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ActivityItem from "./ActivityItem";
-import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
+import {ActivityIndicator, ScrollView, View} from 'react-native';
 import {connect} from "react-redux";
 import {objectToArray} from "../helpers/helpers";
 import Colors from "../constants/Colors";
@@ -9,45 +9,9 @@ import Colors from "../constants/Colors";
 
 class ActivityListItem extends React.Component{
 
-    _renderActivityListItem= (group)=>{
-        var item = group;
-        var sessions = objectToArray(group.sessions);
-        if(this.props.isFavorite){
-            item = (group.isFavorite) ? group : null;
-            sessions = this._filterFavoriteSession(group.sessions);
-        }
-        if(item){
-            return (
-                <Container>
-                    <Hour>{item.time}</Hour>
-                    <LineSeperator/>
-                    <ActivityItems>
-                        {
-                            sessions.map((session, index) => {
-                               return(
-                                   <ActivityItem
-                                       item={session}
-                                       index={index}
-                                       tracks={objectToArray(session.tracks)[0]}
-                                       onPress={this.onPress} />
-                               )
-                            })
-                        }
-
-                        {/*<FlatList*/}
-                            {/*data={sessions}*/}
-                            {/*keyExtractor={(item, index) => ''+item.id}*/}
-                            {/*renderItem={this._renderActivityItem}*/}
-                        {/*/>*/}
-                    </ActivityItems>
-                </Container>
-            )
-        }else {
-            return(
-                <View/>
-            )
-        }
-    };
+    constructor(props){
+        super(props);
+    }
 
     onPress = (item) => {
         if(this.props.scheduleNavigation.schedule){
@@ -55,21 +19,6 @@ class ActivityListItem extends React.Component{
         }else{
             this.props.scheduleNavigation.navigation.navigate("FavoriteActivityDetails", { sessionItem : item });
         }
-    };
-
-    constructor(props){
-        super(props);
-        this.groupIndex = -1;
-        this.sessionIndex = -1;
-    }
-
-    _renderActivityItem = ({item}) => {
-        return (
-            <ActivityItem
-                item={item}
-                tracks={item.tracks[0]}
-                onPress={this.onPress} />
-        )
     };
 
     _filterFavoriteSession(sessions){
@@ -88,7 +37,6 @@ class ActivityListItem extends React.Component{
         if(this.props.data){
             return(
                 <ScrollView>
-                    <Text>contentContainerStyle</Text>
                     {
                         objectToArray(this.props.data.schedule[this.props.indexDay].groups).map((group, indexGrp) => {
                             var item = group;
@@ -111,16 +59,12 @@ class ActivityListItem extends React.Component{
                                                             indexDay ={this.props.indexDay}
                                                             indexGroup={indexGrp}
                                                             indexSession={indexSession}
+                                                            isFavorite = {this.props.isFavorite}
                                                             tracks={session.tracks[0]}
                                                             onPress={this.onPress} />
                                                     )
                                                 })
                                             }
-                                            {/*<FlatList*/}
-                                            {/*data={sessions}*/}
-                                            {/*keyExtractor={(item, index) => ''+item.id}*/}
-                                            {/*renderItem={this._renderActivityItem}*/}
-                                            {/*/>*/}
                                         </ActivityItems>
                                     </Container>
                                 )
@@ -133,13 +77,6 @@ class ActivityListItem extends React.Component{
                     }
                 </ScrollView>
             )
-            // return(
-            //     <CustomFlatList
-            //         data={objectToArray(this.props.data.schedule[this.props.indexDay].groups)}
-            //         keyExtractor={(item, index) => ''+item.time}
-            //         renderItem={({item}) => this._renderActivityListItem(item)}
-            //     />
-            // )
         }else{
             return(
                 <View style={{ flex : 1, alignItems:'center', justifyContent:'center' }}>
