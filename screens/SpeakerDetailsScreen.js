@@ -165,8 +165,6 @@ class SpeakerDetailsScreen extends React.Component{
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-
-        flex:1,
     },
     profilImage: {
         width:150,

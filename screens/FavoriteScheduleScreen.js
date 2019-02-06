@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import ScheduleHeader from "../components/ScheduleHeader";
-import ScheduleNavigator from "../navigation/ScheduleNavigator";
 import {connect} from "react-redux";
+import FavoriteNavigator from "../navigation/FavoriteNavigator";
 
 class FavoriteScheduleScreen extends React.Component{
 
@@ -46,7 +46,7 @@ class FavoriteScheduleScreen extends React.Component{
 
     render(){
         return(
-            <ScheduleNavigator/>
+            <FavoriteNavigator/>
         )
     }
 }

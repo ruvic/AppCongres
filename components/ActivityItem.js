@@ -43,12 +43,25 @@ class ActivityItem extends React.Component{
                 break;
         }
     };
+
     _onFavorite = () => {
         this.setState({
            starIcon : (this.state.isFavorite) ? 'md-star-outline' : 'md-star',
            isFavorite : !this.state.isFavorite,
         });
-    }
+
+        var data = this.props.data;
+        var temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].isFavorite;
+        data.schedule[this.props.indexDay].groups[this.props.indexGroup].isFavorite = !temp;
+        temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite
+        data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite = !temp;
+
+        this.props.dispatch({
+           type : 'UPDATE_APP_DATA',
+           value : data
+        });
+
+    };
 
     constructor(props){
         super(props);
