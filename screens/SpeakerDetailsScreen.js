@@ -10,15 +10,29 @@ import {objectToArray} from "../helpers/helpers";
 
 class SpeakerDetailsScreen extends React.Component{
 
-    static navigationOptions = {
-        title: 'Felix ASSAH',
-        headerStyle: {
-            backgroundColor: Colors.primaryColor,
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-        },
+    // static navigationOptions = {
+    //     title: 'Felix ASSAH',
+    //     headerStyle: {
+    //         backgroundColor: Colors.primaryColor,
+    //     },
+    //     headerTintColor: '#fff',
+    //     headerTitleStyle: {
+    //         fontWeight: 'bold',
+    //     },
+    // };
+    static navigationOptions = ({navigation}) => {
+        const { params = {} } = navigation.state;
+        return {
+            title: params.item.name,
+            headerStyle: {
+                backgroundColor: Colors.primaryColor,
+                color : 'white',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color : 'white',
+            },
+        };
     };
     isCollapsed = false;
 

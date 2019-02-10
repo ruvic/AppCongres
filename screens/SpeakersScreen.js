@@ -1,10 +1,11 @@
 import React from 'react';
 import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
 import ScheduleHeader from "../components/ScheduleHeader";
-import {Body, Container, Content, Left, ListItem, Right, Text, Thumbnail} from 'native-base';
-import Ionicon from 'react-native-vector-icons/Ionicons';
+import {Container, Content} from 'native-base';
 import {connect} from "react-redux";
 import {objectToArray} from "../helpers/helpers";
+import Colors from "../constants/Colors";
+import SpeakerItem from "../components/SpeakerItem";
 
 class SpeakersScreen extends React.Component{
 
@@ -21,27 +22,15 @@ class SpeakersScreen extends React.Component{
     }
 
     _renderItem = ({item}) => {
-        return (
-            <ListItem avatar key={item.id+''} onPress={() => this._onSpeakerItemClick(item)}>
-                <Left style={styles.left}>
-                    <Thumbnail source={require('../assets/images/profile.jpg')} />
-                </Left>
-                <Body>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text numberOfLines={2} note>{item.about}</Text>
-                </Body>
-                <Right style={styles.right}>
-                    <Ionicon
-                        name={"ios-arrow-forward"}
-                        color={"grey"}
-                        size={21}
-                    />
-                </Right>
-            </ListItem>
-        )
+      return(
+        <SpeakerItem
+            item={item}
+            onPress = {this.onSpeakerItemClick}
+        />
+      );
     };
 
-    _onSpeakerItemClick(data){
+    onSpeakerItemClick = (data) => {
         this.props.navigation.navigate("SpeakerDetails", { item : data });
     };
 
@@ -50,7 +39,7 @@ class SpeakersScreen extends React.Component{
     };
 
     render(){
-        if(this.props.data.speakers){
+        if(this.props.data){
             return(
                 <Container>
                     <Content>
