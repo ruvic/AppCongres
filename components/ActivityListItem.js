@@ -35,15 +35,28 @@ class ActivityListItem extends React.Component{
 
     render(){
         if(this.props.data){
+            let schedule = this.props.data.schedule;
+            if(this.props.isFavorite && this.props.scheduleFavoriteFilter){
+                schedule = this.props.scheduleFavoriteFilter;
+            }else if(this.props.scheduleFilter){
+                schedule = this.props.scheduleFilter;
+            }
+            if(!schedule[this.props.indexDay].groups){
+                return(<View/>);
+            }
             return(
                 <ScrollView>
                     {
-                        objectToArray(this.props.data.schedule[this.props.indexDay].groups).map((group, indexGrp) => {
+                        objectToArray(schedule[this.props.indexDay].groups).map((group, indexGrp) => {
                             var item = group;
                             var sessions = objectToArray(group.sessions);
+                            if(!sessions || sessions.length === 0){
+                                return(<View/>);
+                            }
                             if(this.props.isFavorite){
-                                item = (group.isFavorite) ? group : null;
+                                // item = (group.isFavorite) ? group : null;
                                 sessions = this._filterFavoriteSession(group.sessions);
+                                item = (sessions.length > 0)?group : null;
                             }
                             if(item){
                                 return (
@@ -116,6 +129,8 @@ const mapStateToProps = (state) => {
     return {
         scheduleNavigation : state.updateGlobalData.scheduleNavigation,
         data : state.updateAppData.data,
+        scheduleFilter : state.updateFilterData.scheduleFilter,
+        scheduleFavoriteFilter : state.updateFilterData.scheduleFavoriteFilter,
     }
 };
 

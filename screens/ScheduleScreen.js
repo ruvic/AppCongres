@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import ScheduleNavigator from "../navigation/ScheduleNavigator";
 import {connect} from "react-redux";
 import Header from "../components/Header";
@@ -7,11 +6,7 @@ import Header from "../components/Header";
 class ScheduleScreen extends React.Component{
 
     static navigationOptions = {
-        header : <Header searchBar title="SCHEDULE" icon="md-calendar" onSearch={this.onSearch} />,
-    };
-
-    onSearch = (text) => {
-        console.log(text);
+        header : <Header searchBar title="SCHEDULE" icon="md-calendar" screen="schedule" />,
     };
 
     constructor(props){
@@ -54,17 +49,4 @@ class ScheduleScreen extends React.Component{
     }
 }
 
-const Container = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
-// const mapStateToProps = (state) => {
-//     return {
-//         GameGlobal: state.updateGameData.GameData
-//     }
-// };
-
-// export default connect(mapStateToProps)(ScheduleScreen);
 export default connect()(ScheduleScreen);

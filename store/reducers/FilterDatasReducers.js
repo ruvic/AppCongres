@@ -1,5 +1,7 @@
 const initialState = {
-    speakersFilter : null
+    speakersFilter : null,
+    scheduleFilter : null,
+    scheduleFavoriteFilter : null,
 };
 
 function updateFilterData(state = initialState, action) {
@@ -9,8 +11,20 @@ function updateFilterData(state = initialState, action) {
             nextState = {
                 ...state,
                 speakersFilter : action.value
-            }
-            return nextState || state
+            };
+            return nextState || state;
+        case 'UPDATE_SCHEDULE_LIST' :
+            nextState = {
+                ...state,
+                scheduleFilter : action.value
+            };
+            return nextState || state;
+        case 'UPDATE_FAVORITE_SCHEDULE_LIST' :
+            nextState = {
+                ...state,
+                scheduleFavoriteFilter : action.value
+            };
+            return nextState || state;
         default:
             return state
     }

@@ -16,6 +16,12 @@ class Header extends React.Component{
             case 'speakers' :
                 this.speakersFilter(text);
                 break;
+            case 'schedule' :
+                this.scheduleFilter(text);
+                break;
+            case 'favorite' :
+                this.scheduleFavoriteFilter(text);
+                break;
         }
     };
 
@@ -52,6 +58,82 @@ class Header extends React.Component{
             });
         }
     };
+
+    scheduleFilter(text){
+        var filterSchedule = {};
+        let i = 0;
+        if (this.props.data) {
+            if(text.replace(' ', '') === ''){
+                filterSchedule = this.props.data.schedule;
+            }else{
+                objectToArray(this.props.data.schedule).forEach((schedule) => {
+                    var groups = {};
+                    let j = 0;
+                    objectToArray(schedule.groups).forEach((group) => {
+                       var sessions = {};
+                       let k=0;
+                       objectToArray(group.sessions).forEach((session)=> {
+                          if(session.tracks[0].toLowerCase().indexOf(text.toLowerCase()) >=0){
+                              sessions[k] = session;
+                              k++;
+                          }
+                       });
+                       if(k>0){
+                           groups[j] = {...group};
+                           groups[j].sessions = sessions;
+                           j++;
+                       }
+                    });
+                    filterSchedule[i] = {...schedule};
+                    filterSchedule[i].groups = groups;
+                    i++;
+                });
+            }
+            this.props.dispatch({
+                type : 'UPDATE_SCHEDULE_LIST',
+                value : filterSchedule
+            });
+        }
+    };
+
+    scheduleFavoriteFilter(text){
+        var filterSchedule = {};
+        let i = 0;
+        if (this.props.data) {
+            if(text.replace(' ', '') === ''){
+                filterSchedule = this.props.data.schedule;
+            }else{
+                objectToArray(this.props.data.schedule).forEach((schedule) => {
+                    var groups = {};
+                    let j = 0;
+                    objectToArray(schedule.groups).forEach((group) => {
+                        var sessions = {};
+                        let k=0;
+                        objectToArray(group.sessions).forEach((session)=> {
+                            if(session.isFavorite && session.tracks[0].toLowerCase().indexOf(text.toLowerCase()) >=0){
+                                sessions[k] = session;
+                                k++;
+                            }
+                        });
+                        if(k>0){
+                            groups[j] = {...group};
+                            groups[j].sessions = sessions;
+                            j++;
+                        }
+                    });
+                    filterSchedule[i] = {...schedule};
+                    filterSchedule[i].groups = groups;
+                    i++;
+                });
+            }
+
+            this.props.dispatch({
+                type : 'UPDATE_FAVORITE_SCHEDULE_LIST',
+                value : filterSchedule
+            });
+        }
+    };
+
 
     _renderButton = (text, onPress) => (
         <TouchableOpacity onPress={onPress}>

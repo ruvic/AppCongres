@@ -7,10 +7,7 @@ import Header from "../components/Header";
 class FavoriteScheduleScreen extends React.Component{
 
     static navigationOptions = {
-        header : <Header searchBar title="MY SCHEDULE" icon="md-star" onSearch={this.onSearch} />,
-    };
-    onSearch = (text) => {
-        console.log(text);
+        header : <Header searchBar title="MY SCHEDULE" icon="md-star" screen="favorite" />,
     };
 
     constructor(props){

@@ -52,11 +52,17 @@ class ActivityItem extends React.Component{
            isFavorite : !this.state.isFavorite,
         });
 
+        /**
+         * Ajouter un attribut isFavorite à true à chaque groupe concerné et
+         * On fait pareil pour la session concernée
+         */
+
         var data = this.props.data;
-        var temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].isFavorite;
-        data.schedule[this.props.indexDay].groups[this.props.indexGroup].isFavorite = !temp;
-        temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite
+        var temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite
         data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite = !temp;
+        // temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].isFavorite;
+        // data.schedule[this.props.indexDay].groups[this.props.indexGroup].isFavorite = !temp;
+
 
         this.props.dispatch({
            type : 'UPDATE_APP_DATA',
