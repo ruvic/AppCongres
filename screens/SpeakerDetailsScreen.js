@@ -81,8 +81,6 @@ class SpeakerDetailsScreen extends React.Component{
         scheduleList.forEach((schedule) => {
             objectToArray(schedule.groups).forEach((group) => {
                 objectToArray(group.sessions).forEach((session) => {
-
-
                     if(session.chairsNames && objectToArray(session.chairsNames).indexOf(item.id+'')>=0){
                         session["date"] = schedule.date;
                         result.moderateurs.push(session);

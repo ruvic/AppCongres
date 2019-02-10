@@ -1,24 +1,23 @@
 import React from 'react';
 import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
-import ScheduleHeader from "../components/ScheduleHeader";
 import {Container, Content} from 'native-base';
 import {connect} from "react-redux";
 import {objectToArray} from "../helpers/helpers";
 import Colors from "../constants/Colors";
 import SpeakerItem from "../components/SpeakerItem";
+import Header from "../components/Header";
 
 class SpeakersScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader speaker searchBar title="SPEAKERS" onSearch={this.onSearch} />,
-    };
-
-    onSearch = (text) => {
-        console.log(text);
+        header : <Header speaker searchBar title="SPEAKERS" screen="speakers" />,
     };
 
     constructor(props){
         super(props);
+        this.state = {
+          FilterData : null
+        };
     }
 
     _renderItem = ({item}) => {
@@ -40,11 +39,12 @@ class SpeakersScreen extends React.Component{
 
     render(){
         if(this.props.data){
+            let speakersList = (this.props.speakerFilter) ? this.props.speakerFilter : this.props.data.speakers;
             return(
                 <Container>
                     <Content>
                         <FlatList
-                            data={objectToArray(this.props.data.speakers)}
+                            data={objectToArray(speakersList)}
                             keyExtractor={(item, index) => item.id+""}
                             renderItem={this._renderItem}
                         />
@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        data: state.updateAppData.data
+        data: state.updateAppData.data,
+        speakerFilter : state.updateFilterData.speakersFilter,
     }
 };
 

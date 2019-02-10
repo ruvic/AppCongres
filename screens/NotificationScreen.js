@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import ScheduleHeader from "../components/ScheduleHeader";
 import {StyleSheet, Text} from "react-native";
+import Header from "../components/Header";
 
 class NotificationScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader title="NOTIFICATION"/>,
+        header : <Header title="NOTIFICATION"/>,
     };
 
     constructor(props){

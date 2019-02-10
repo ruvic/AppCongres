@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import ScheduleHeader from "../components/ScheduleHeader";
 import ScheduleNavigator from "../navigation/ScheduleNavigator";
 import {connect} from "react-redux";
+import Header from "../components/Header";
 
 class ScheduleScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader searchBar title="SCHEDULE" icon="md-calendar" onSearch={this.onSearch} />,
+        header : <Header searchBar title="SCHEDULE" icon="md-calendar" onSearch={this.onSearch} />,
     };
 
     onSearch = (text) => {

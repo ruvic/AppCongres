@@ -6,8 +6,18 @@ import Layout from "../constants/Layout";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {SearchBar} from 'react-native-elements';
 import Modal from 'react-native-modal';
+import {connect} from "react-redux";
+import {objectToArray} from "../helpers/helpers";
 
-export default class ScheduleHeader extends React.Component{
+class Header extends React.Component{
+
+    _onSearch = (text) =>{
+        switch (this.props.screen){
+            case 'speakers' :
+                this.speakersFilter(text);
+                break;
+        }
+    };
 
     onAbout = () => {
         this.setState({
@@ -15,9 +25,34 @@ export default class ScheduleHeader extends React.Component{
         });
     };
 
-    _onSearch = (text) =>{
+    constructor(props){
+        super(props);
+        this.state = {
+            ModalIsVisible : null
+        };
+    }
 
+    speakersFilter(text){
+        var speakers = {};
+        let i = 0;
+        if (this.props.data) {
+            if(text.replace(' ', '') === ''){
+                speakers = this.props.data.speakers;
+            }else{
+                objectToArray(this.props.data.speakers).forEach((speaker) => {
+                    if( speaker.name.toLowerCase().indexOf(text.toLowerCase())>=0 || speaker.country.toLowerCase().indexOf(text.toLowerCase()) >=0){
+                        speakers[i] = speaker;
+                        i++;
+                    }
+                });
+            }
+            this.props.dispatch({
+                type : 'UPDATE_SPEAKERS_LIST',
+                value : speakers
+            });
+        }
     };
+
     _renderButton = (text, onPress) => (
         <TouchableOpacity onPress={onPress}>
             <View style={styles.button}>
@@ -25,6 +60,7 @@ export default class ScheduleHeader extends React.Component{
             </View>
         </TouchableOpacity>
     );
+
     _showSearchBar = () => {
         if(this.props.searchBar){
             return (
@@ -55,13 +91,6 @@ export default class ScheduleHeader extends React.Component{
             {this._renderButton('Close', () => this.setState({ ModalIsVisible: false}))}
         </View>
     );
-
-    constructor(props){
-        super(props);
-        this.state = {
-            ModalIsVisible : null
-        };
-    }
 
     render(){
         return(
@@ -178,3 +207,11 @@ const styles = StyleSheet.create({
         fontSize:20
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        data: state.updateAppData.data
+    }
+};
+
+export default connect(mapStateToProps)(Header);

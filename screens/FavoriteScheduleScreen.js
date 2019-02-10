@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import ScheduleHeader from "../components/ScheduleHeader";
 import {connect} from "react-redux";
 import FavoriteNavigator from "../navigation/FavoriteNavigator";
+import Header from "../components/Header";
 
 class FavoriteScheduleScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader searchBar title="MY SCHEDULE" icon="md-star" onSearch={this.onSearch} />,
+        header : <Header searchBar title="MY SCHEDULE" icon="md-star" onSearch={this.onSearch} />,
     };
     onSearch = (text) => {
         console.log(text);

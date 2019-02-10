@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ScheduleHeader from "./ScheduleHeader";
+import ScheduleHeader from "./Header";
 import {StyleSheet} from "react-native";
 
 class AboutContent extends React.Component{

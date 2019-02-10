@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text} from 'react-native';
 import styled from 'styled-components';
-import ScheduleHeader from "../components/ScheduleHeader";
+import Header from "../components/Header";
 
 class GalleryScreen extends React.Component{
 
     static navigationOptions = {
-        header : <ScheduleHeader title="GALLERY" icon="md-images"/>,
+        header : <Header title="GALLERY" icon="md-images"/>,
     };
 
     constructor(props){
