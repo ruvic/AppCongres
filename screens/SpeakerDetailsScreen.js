@@ -1,25 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import ViewMoreText from "react-native-view-more-text";
 import {Collapse, CollapseBody, CollapseHeader} from "accordion-collapse-react-native";
 import Colors from "../constants/Colors";
 import {connect} from "react-redux";
 import {objectToArray} from "../helpers/helpers";
+import {imageGet} from "../Firebase";
 
 class SpeakerDetailsScreen extends React.Component{
 
-    // static navigationOptions = {
-    //     title: 'Felix ASSAH',
-    //     headerStyle: {
-    //         backgroundColor: Colors.primaryColor,
-    //     },
-    //     headerTintColor: '#fff',
-    //     headerTitleStyle: {
-    //         fontWeight: 'bold',
-    //     },
-    // };
     static navigationOptions = ({navigation}) => {
         const { params = {} } = navigation.state;
         return {
@@ -38,7 +28,11 @@ class SpeakerDetailsScreen extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = { icons1: "md-arrow-dropdown",  icons2: "md-arrow-dropdown"};
+        this.state = {
+            icons1: "md-arrow-dropdown",
+            icons2: "md-arrow-dropdown",
+            imageSource : require("../assets/images/profile.jpg"),
+        };
     }
 
     _showActivityItem = ({item}) => {
@@ -101,13 +95,17 @@ class SpeakerDetailsScreen extends React.Component{
         return result;
     }
 
+    componentDidMount(){
+        imageGet(this.props.navigation.state.params.item.profilePic, this);
+    }
+
     render(){
         const item = this.props.navigation.state.params.item;
         const speakersSession = this._speakersSessions(item);
         return(
             <Container contentContainerStyle={styles.container}>
                 <ProfilInfos>
-                    <Image source={require('../assets/images/profil.png')} style={styles.profilImage}/>
+                    <Image source={this.state.imageSource} style={styles.profilImage}/>
                     <Text style={styles.nameProfil}>
                         {item.name}
                     </Text>
@@ -133,7 +131,6 @@ class SpeakerDetailsScreen extends React.Component{
                     <CollapseHeader>
                         <HeadAccordion>
                             <Text style={{textAlign:"center", color:"white", fontSize:16}}>Speech session
-                                <Icon style={{fontSize:16}} name={this.state.icons1} color="white" />
                             </Text>
                         </HeadAccordion>
                     </CollapseHeader>
@@ -153,7 +150,7 @@ class SpeakerDetailsScreen extends React.Component{
                     <CollapseHeader>
                         <HeadAccordion style={{paddingLeft:15, paddingRight:15}}>
                             <Text style={{textAlign:"center" , marginRight: 10 ,color:"white", fontSize:16,}}>Moderating session
-                            <Icon style={{fontSize:16,paddingLeft:3}} name={this.state.icons2} color="white" /></Text>
+                            </Text>
                         </HeadAccordion>
                     </CollapseHeader>
                     <CollapseBody style={{textAlign:"Center",padding:5}}>

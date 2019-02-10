@@ -5,6 +5,7 @@ import {ActivityIndicator, ScrollView, View} from 'react-native';
 import {connect} from "react-redux";
 import {objectToArray} from "../helpers/helpers";
 import Colors from "../constants/Colors";
+import EmptyData from "./EmtptyData";
 
 
 class ActivityListItem extends React.Component{
@@ -42,7 +43,7 @@ class ActivityListItem extends React.Component{
                 schedule = this.props.scheduleFilter;
             }
             if(!schedule[this.props.indexDay].groups){
-                return(<View/>);
+                return(<EmptyData/>);
             }
             return(
                 <ScrollView>
