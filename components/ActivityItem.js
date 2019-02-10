@@ -60,25 +60,22 @@ class ActivityItem extends React.Component{
         var data = this.props.data;
         var temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite
         data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite = !temp;
-        // temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].isFavorite;
-        // data.schedule[this.props.indexDay].groups[this.props.indexGroup].isFavorite = !temp;
 
+        //store it persistently
+        store("data", data);
 
         this.props.dispatch({
            type : 'UPDATE_APP_DATA',
            value : data
         });
 
-        //store it persistently
-        store("data", data);
-
     };
 
     constructor(props){
         super(props);
         this.state = {
-            starIcon : 'md-star-outline',
-            isFavorite : false,
+            starIcon : (!this.props.item.isFavorite) ? 'md-star-outline' : 'md-star',
+            isFavorite : this.props.item.isFavorite,
         }
     }
 

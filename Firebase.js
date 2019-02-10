@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-import {retrieve, store} from './storage/Storage';
+import {retrieve} from './storage/Storage';
 
 const settings = {timestampsInSnapshots: true};
 
@@ -18,7 +18,7 @@ firebase.initializeApp(config);
 export function getFirebaseData(callback){
     try {
         firebase.database().ref('data').on('value', (data) => {
-            store("data", data.toJSON());
+            //store("data", data.toJSON());
             callback(data.toJSON());
         });
     }catch (e){

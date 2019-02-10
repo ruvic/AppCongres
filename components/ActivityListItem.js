@@ -55,7 +55,6 @@ class ActivityListItem extends React.Component{
                                 return(<View/>);
                             }
                             if(this.props.isFavorite){
-                                // item = (group.isFavorite) ? group : null;
                                 sessions = this._filterFavoriteSession(group.sessions);
                                 item = (sessions.length > 0)?group : null;
                             }

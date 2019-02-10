@@ -24,6 +24,7 @@ function updateFilterData(state = initialState, action) {
                 ...state,
                 scheduleFavoriteFilter : action.value
             };
+            // store("scheduleFavoriteFilter", action.value);
             return nextState || state;
         default:
             return state
