@@ -18,6 +18,7 @@ export default {
     activeBarIconColor : '#5ea76d',
     inactiveBarIconColor : '#636363',
     lineSeparator : '#cacfca',
+    dangerColor: '#C30D4B',
     tracks : {
         Food : '#8E8D93',
         CME : '#D70050',

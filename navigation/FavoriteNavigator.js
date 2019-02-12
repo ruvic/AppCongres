@@ -5,13 +5,41 @@ import Colors from "../constants/Colors";
 import FirstDayFavoriteScreen from "../screens/FirstDayFavoriteScreen";
 import SecondDayFavoriteScreen from "../screens/SecondDayFavoriteScreen";
 import ThirdDayFavoriteScreen from "../screens/ThirdDayFavoriteScreen";
+import TabBarLabel from "../components/TabBarLabel";
 
 
 export default FavoriteNavigator = createMaterialTopTabNavigator(
     {
-        FirstDay: FirstDayFavoriteScreen,
-        SecondDay: SecondDayFavoriteScreen,
-        ThirdDay: ThirdDayFavoriteScreen,
+        FirstDay : {
+            screen : FirstDayFavoriteScreen,
+            navigationOptions : {
+                tabBarLabel : ({focused}) => (
+                    <TabBarLabel
+                        focused={focused}
+                        index={0} />
+                ),
+            }
+        },
+        SecondDay: {
+            screen : SecondDayFavoriteScreen,
+            navigationOptions : {
+                tabBarLabel : ({focused}) => (
+                    <TabBarLabel
+                        focused={focused}
+                        index={1}/>
+                )
+            }
+        },
+        ThirdDay: {
+            screen : ThirdDayFavoriteScreen,
+            navigationOptions : {
+                tabBarLabel : ({focused}) => (
+                    <TabBarLabel
+                        focused={focused}
+                        index={2}/>
+                ),
+            }
+        },
     },
     {
         tabBarPosition: 'top',

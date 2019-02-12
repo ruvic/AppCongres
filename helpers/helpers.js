@@ -22,11 +22,19 @@ function weekDayName(day){
     }
 }
 
+function dayNumber(day){
+    let result = day;
+    if(day < 10){
+        result = '0'+day;
+    }
+    return result;
+}
+
 export function formatDate(date) {
     var dateArray = String(date).split('-');
     var d = new Date(dateArray[2], dateArray[1], dateArray[0]);
     return {
         weekDay : weekDayName(d.getDay()),
-        day : d.getDay()
+        day : dayNumber(d.getDay())
     };
 }

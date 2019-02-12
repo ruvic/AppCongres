@@ -8,17 +8,6 @@ import {objectToArray} from "../helpers/helpers";
 
 class FirstDayScreen extends React.Component{
 
-    static navigationOptions = {
-        title : 'WED 03',
-    };
-
-    // static navigationOptions = ({navigation}) => {
-    //     // const { params = {} } = navigation.state;
-    //     return {
-    //         title: 'abc',
-    //     };
-    // };
-
     updateData = (data) => {
         var sessionsId = [];
         retrieve("data", (storeData) => {

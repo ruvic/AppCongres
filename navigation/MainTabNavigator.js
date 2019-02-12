@@ -12,6 +12,7 @@ import Colors from "../constants/Colors";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Layout from "../constants/Layout";
 import NotificationScreen from "../screens/NotificationScreen";
+import NotificationIcon from "../components/NotificationIcon";
 
 
 const ScheduleStack = createStackNavigator({
@@ -85,8 +86,8 @@ const NotifStack = createStackNavigator({
 NotifStack.navigationOptions = {
     tabBarLabel: 'News',
     tabBarIcon: ({ focused }) => (
-        <Ionicon
-            name={"md-notifications-outline"}
+        <NotificationIcon
+            name="md-notifications-outline"
             color={(focused)?Colors.primaryColor:Colors.inactiveBarIconColor}
             size={Layout.icon_size}
         />

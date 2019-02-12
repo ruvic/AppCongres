@@ -5,10 +5,6 @@ import {connect} from "react-redux";
 
 class SecondDayFavoriteScreen extends React.Component{
 
-    static navigationOptions = {
-        title : 'WED 03',
-    };
-
     constructor(props){
         super(props);
     }
@@ -24,11 +20,5 @@ const Container = styled.View`
   flex : 1;
 `;
 
-// const mapStateToProps = (state) => {
-//     alert(state.updateAppData.datas);
-//     return {
-//         Datas: state.updateAppData.datas
-//     }
-// };
 
 export default connect()(SecondDayFavoriteScreen);
