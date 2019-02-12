@@ -27,6 +27,20 @@ class ActivityDetailsScreen extends React.Component{
         this.sessionItem = this.props.navigation.state.params.sessionItem;
     }
 
+    _getSpeakerProp(id, att){
+        var result = null
+        objectToArray(this.props.data.speakers).forEach((speaker) => {
+            if(speaker.id === id){
+                result = speaker;
+            }
+        });
+        if(result) {
+            return result[att];
+        }else{
+            return ' ';
+        }
+    }
+
     _renderItem(item){
         return(
             <ItemContainer>
@@ -38,7 +52,7 @@ class ActivityDetailsScreen extends React.Component{
                 </Text>
                 <Text style={{flexDirection: 'row', flexWrap:'wrap'}}>
                     <Text style={{fontWeight: '500'}}>
-                        {this.props.data.speakers[item.speakerNames[0]].name+' '}
+                        {this._getSpeakerProp(item.speakerNames[0], "name")}
                     </Text>
                     <Text style={{marginLeft:5}}>
                         {'('+this.props.data.speakers[item.speakerNames[0]].country+')'}
