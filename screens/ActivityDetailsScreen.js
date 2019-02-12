@@ -67,7 +67,7 @@ class ActivityDetailsScreen extends React.Component{
             <Container contentContainerStyle={styles.container}>
                 <TitleViewPage tracks={Colors.tracks[this.sessionItem.tracks[0]]}>
                     <TitleTextPage>
-                        {this.sessionItem.name}
+                        {(this.sessionItem.topic)?this.sessionItem.topic:''}
                     </TitleTextPage>
                 </TitleViewPage>
                 <HeaderView>

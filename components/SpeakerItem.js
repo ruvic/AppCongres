@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Body, Left, ListItem, Right, Text, Thumbnail} from 'native-base';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import {imageGet} from "../Firebase";
+import Colors from "../constants/Colors";
 
 class SpeakerItem extends React.Component{
 
@@ -26,6 +27,7 @@ class SpeakerItem extends React.Component{
                 </Left>
                 <Body>
                 <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.country}>{item.country}</Text>
                 <Text numberOfLines={2} note>{item.about}</Text>
                 </Body>
                 <Right style={styles.right}>
@@ -53,6 +55,10 @@ const styles = StyleSheet.create({
     name : {
         fontWeight: 'bold'
     },
+    country : {
+        color : Colors.primaryColor,
+
+    }
 });
 
 
