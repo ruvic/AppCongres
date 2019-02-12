@@ -20,39 +20,40 @@ class FirstDayScreen extends React.Component{
     // };
 
     updateData = (data) => {
-
         var sessionsId = [];
         retrieve("data", (storeData) => {
-            objectToArray(storeData.schedule).forEach((schedule) => {
-               objectToArray(schedule.groups).forEach((group) => {
-                  objectToArray(group.sessions).forEach((session) => {
-                    if(session.isFavorite){
-                        sessionsId.push(session.id);
-                    }
-                  });
-               });
-            });
+            if(storeData){
+                objectToArray(storeData.schedule).forEach((schedule) => {
+                    var daySessionId = [];
+                    objectToArray(schedule.groups).forEach((group) => {
+                        objectToArray(group.sessions).forEach((session) => {
+                            if(session.isFavorite){
+                                daySessionId.push(session.id);
+                            }
+                        });
+                    });
+                    sessionsId.push(daySessionId);
+                });
 
-            objectToArray(data.schedule).forEach((schedule) => {
-                objectToArray(schedule.groups).forEach((group) => {
-                    objectToArray(group.sessions).forEach((session) => {
-                        session.isFavorite = sessionsId.indexOf(session.id) >=0;
+                objectToArray(data.schedule).forEach((schedule, index) => {
+                    objectToArray(schedule.groups).forEach((group) => {
+                        objectToArray(group.sessions).forEach((session) => {
+                            session.isFavorite = sessionsId[index].indexOf(session.id) >=0;
+                        });
                     });
                 });
-            });
-
-            store("data", data);
+            }
 
             this.props.dispatch({
                 type : 'UPDATE_APP_DATA',
                 value : data,
             });
 
+            store("data", data);
+
         });
 
     };
-
-
 
 
     constructor(props){

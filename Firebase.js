@@ -15,15 +15,30 @@ const config = {
 };
 firebase.initializeApp(config);
 
+firebaseConnection = () =>{
+    var connectedRef = firebase.database().ref(".info/connected");
+    connectedRef.on("value", function(snap) {
+        if (snap.val() === true) {
+            alert("connected");
+        } else {
+            alert("not connected");
+        }
+    });
+};
+
 export function getFirebaseData(callback){
-    try {
-        firebase.database().ref('data').on('value', (data) => {
-            //store("data", data.toJSON());
-            callback(data.toJSON());
-        });
-    }catch (e){
-        retrieve("data", callback);
-    }
+
+    firebase.database().ref('data').on('value', (data) => {
+        callback(data.toJSON());
+    });
+
+    var connectedRef = firebase.database().ref(".info/connected");
+    connectedRef.on("value", function(snap) {
+        if (snap.val() === false) {
+            retrieve("data", callback);
+        }
+    });
+
 }
 
 export function imageGet(path, comp){

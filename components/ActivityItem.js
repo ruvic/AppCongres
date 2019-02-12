@@ -60,6 +60,10 @@ class ActivityItem extends React.Component{
         var data = this.props.data;
         var temp = data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite
         data.schedule[this.props.indexDay].groups[this.props.indexGroup].sessions[this.props.indexSession].isFavorite = !temp;
+        // if(!data.schedule[this.props.indexDay].groups[this.props.indexGroup].favoriteSessionsId){
+        //     data.schedule[this.props.indexDay].groups[this.props.indexGroup].favoriteSessionsId = [];
+        // }
+
 
         //store it persistently
         store("data", data);
